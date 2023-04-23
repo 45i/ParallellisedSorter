@@ -15,4 +15,4 @@ A small experiment to make a quicksort algorithm that sorts an array in parallel
 - RAM :- 12GB -> Free: 11.9GB
 
 
-*Execution Speeds depend from device to device*
+*Execution Speeds vary from device to device*
