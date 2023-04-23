@@ -27,10 +27,10 @@ class ParallelisedSort {
   }
   
   System.out.println("Enable debug mode? (true/false)");
-  boolean litemode = sc.nextBoolean();
+  boolean debugMode = sc.nextBoolean();
   sc.close();
   int processors = Runtime.getRuntime().availableProcessors();
-  if (litemode) {
+  if (debugMode) {
    System.out.println("Number of available processors: " + processors);
    System.out.println("Calculating the number of elements per child process....");
   }
@@ -40,12 +40,12 @@ class ParallelisedSort {
    count++;
   }
  
-  if (litemode) {
+  if (debugMode) {
    System.out.println("Elements per child process: " + count);
   }
  
   long startTime = System.currentTimeMillis();
-  int[] new_arr = Sort(Sort_Main(arr, n, count, litemode));
+  int[] new_arr = Sort(Sort_Main(arr, n, count, debugMode));
   long endTime = System.currentTimeMillis();
  
   System.out.print("The sorted array is: ");
