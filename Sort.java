@@ -79,22 +79,22 @@ class ParallelisedSort {
   boolean continue_loop = true;
   int index = 0, processor_count = Runtime.getRuntime().availableProcessors();
   outerloop: for (int h = 0; h < processor_count; h++) {
-   if (!continue_loop) {
-     break outerloop;
-   }
-   int arr[] = new int[((n - index) > child_count) ? child_count : (n - index)];
-   for (int i = 0; i < child_count; i++) {
- 
-     if (index == n) {
+    int arr[] = new int[((n - index) > child_count) ? child_count : (n - index)];
+    for (int i = 0; i < child_count; i++) {
+      
+      if (index == n) {
         continue_loop = false;
         break;
-     }
-     arr[i] = array_parent[index];
- 
-     index++;
- 
-   }
-   if (litemode) {
+      }
+      arr[i] = array_parent[index];
+      
+      index++;
+      
+    }
+    if (!continue_loop) {
+      break outerloop;
+    }
+    if (litemode) {
      System.out.print("The array for child process " + h + " is [");
      for (int i = 0; i < arr.length; i++) {
         System.out.print(arr[i] + ", ");
