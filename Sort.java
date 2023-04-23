@@ -9,14 +9,23 @@ class ParallelisedSort {
   Scanner sc = new Scanner(System.in);
   int n = sc.nextInt();
   int arr[] = new int[n];
-  System.out.println("Enter the elements of the array:");
-  for (int i = 0; i < n; i++) {
-   while (!sc.hasNextInt()) {
-     System.out.println("Please enter an integer");
-     sc.next();
+  System.out.println("Populate array with random numbers? (true/false)");
+  boolean random = sc.nextBoolean();
+  if (random) {
+   for (int i = 0; i < n; i++) {
+    arr[i] = (int) (Math.random() * (n+1));
    }
-   arr[i] = sc.nextInt();
+  } else {
+   System.out.println("Enter the elements of the array:");
+   for (int i = 0; i < n; i++) {
+    while (!sc.hasNextInt()) {
+      System.out.println("Please enter an integer");
+      sc.next();
+    }
+    arr[i] = sc.nextInt();
+   }
   }
+  
   System.out.println("Enable debug mode? (true/false)");
   boolean litemode = sc.nextBoolean();
   sc.close();
@@ -127,11 +136,9 @@ class ParallelisedSort {
  
   // int[] array_child = new int[];
   List<Integer> array_child = new ArrayList<Integer>();
-  int c = 0;
   for (int[] i : list) {
    for (int new_int : i) {
      array_child.add(new_int);
-     c++;
    }
   }
   // for (int i = 0; i < array_child.size(); i++) {
