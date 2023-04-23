@@ -13,3 +13,5 @@ A small experiment to make a quicksort algorithm that sorts an array in parallel
 ### Hardware Details
 - Processor :- Intel i3-6006U CPU @ 2.00 GHz
 - RAM :- 12GB -> Free: 11.9GB
+
+* Not the fastest ever but it's an experiment, what else do you expect?
