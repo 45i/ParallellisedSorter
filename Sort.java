@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
  
-//bubble sort
+//sort
 class ParallelisedSort {
  public static void main(String[] args) {
   System.out.println("Enter the number of elements in the array:");
@@ -34,7 +34,7 @@ class ParallelisedSort {
   }
  
   long startTime = System.currentTimeMillis();
-  int[] new_arr = Sort(bubbleSort(arr, n, count, litemode));
+  int[] new_arr = Sort(Sort_Main(arr, n, count, litemode));
   long endTime = System.currentTimeMillis();
  
   System.out.print("The sorted array is: ");
@@ -71,7 +71,7 @@ class ParallelisedSort {
   return array_parent;
  }
  
- public static int[] bubbleSort(int array_parent[], int n, int child_count, boolean litemode) {
+ public static int[] Sort_Main(int array_parent[], int n, int child_count, boolean litemode) {
   ArrayList<Thread> threads = new ArrayList<Thread>();
   ArrayList<int[]> list = new ArrayList<int[]>();
   int index = 0, processor_count = Runtime.getRuntime().availableProcessors();
