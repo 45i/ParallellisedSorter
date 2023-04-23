@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
  
 //bubble sort
-class ParallelizedSort {
+class ParallelisedSort {
  public static void main(String[] args) {
   System.out.println("Enter the number of elements in the array:");
   Scanner sc = new Scanner(System.in);
