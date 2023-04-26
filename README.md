@@ -15,4 +15,5 @@ A small experiment to make a selectionsort algorithm that sorts an array in para
 - RAM :- 12GB -> Free: 11.9GB
 
 
-*Execution Speeds vary from device to device*
+- - **Execution Speeds vary from device to device**
+- - *Values are all generated randomly*
