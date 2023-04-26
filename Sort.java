@@ -9,7 +9,7 @@ class ParallelisedSort {
   Scanner sc = new Scanner(System.in);
   int n = sc.nextInt();
   int arr[] = new int[n];
-  System.out.println("Populate array with random numbers? (true/false)");
+  System.out.println("Populate array with random numbers? (true/false)[Recommend: "+((n>20)?"true":"false")+"]");
   boolean random = sc.nextBoolean();
   if (random) {
    for (int i = 0; i < n; i++) {
