@@ -5,10 +5,10 @@ A small experiment to make a selectionsort algorithm that sorts an array in para
 ## "I think they're called benchmarks"
  | Number Of Elements | Time Taken |
 |--------------------|------------|
-| 10                 | 7ms        |
-| 100                | 7ms        |
-| 10,000             | 222ms      |
-| 100,000            | 6s 468ms   |
+| 10                 | 3ms        |
+| 100                | 6ms        |
+| 10,000             | 50ms      |
+| 100,000            | 2s 455ms   |
 
 ### Hardware Details
 - Processor :- Intel i3-6006U CPU @ 2.00 GHz
