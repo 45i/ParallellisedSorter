@@ -7,7 +7,7 @@ A small experiment to make a selectionsort algorithm that sorts an array in para
 |--------------------|------------|
 | 10                 | 3ms        |
 | 100                | 6ms        |
-| 10,000             | 50ms      |
+| 10,000             | 41ms      |
 | 100,000            | 2s 455ms   |
 
 ### Hardware Details
