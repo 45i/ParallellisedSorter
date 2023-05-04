@@ -49,11 +49,11 @@ class ParallelisedSort {
   long endTime = System.currentTimeMillis();
  
   System.out.print("The sorted array is: ");
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < new_arr.length; i++) {
    System.out.print(new_arr[i] + ", ");
   }
   System.out.println("Took " + (endTime - startTime) + "ms -> " + (endTime - startTime) / 1000 + " seconds "
-     + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + n);
+     + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + new_arr.length);
  }
  
  public static int[] Sort(int array_parent[]) {
