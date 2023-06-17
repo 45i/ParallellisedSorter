@@ -16,10 +16,20 @@ class Sort {
      .println("Populate array with random numbers? (true/false)[Recommend: " + ((n > 20) ? "true" : "false") + "]");
   boolean random = (sc.next().toLowerCase().charAt(0) == 't');
   if (random) {
+   String randomString = "";
    for (int i = 0; i < n; i++) {
-     arr[i] = (int) (Math.random() * (n + 1));
+     int temp = (int) (Math.random() * (n + 1));
+     arr[i] = temp;
+     // randomString += temp + " ";
    }
   } else {
+   // This code reads in n integers from the user and stores them in an array of
+   // length n.
+   // It assumes that the user will enter n integers, and that no other input will
+   // be entered.
+   // If the user does not enter an integer, it will ask the user to enter an
+   // integer.
+ 
    System.out.println("Enter the elements of the array:");
    for (int i = 0; i < n; i++) {
      while (!sc.hasNextInt()) {
@@ -57,6 +67,10 @@ class Sort {
  
   System.out.println("Took " + (endTime - startTime) + "ms -> " + (endTime - startTime) / 1000 + " seconds "
      + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + new_arr.length);
+  // This code takes the merged arrays and stores them in a new array. It then
+  // prints the new array to a file.
+  // It also prints the time taken to sort the array to the file.
+ 
   if (writeToFile) {
    System.out.println("Enter the file name (Without File Extension):");
    String fileName = sc.next();
@@ -72,6 +86,10 @@ class Sort {
      System.out.println("File does not exist. Creating...");
    }
    try {
+     // This code writes the array to a text file, and also writes the stats of the
+     // sort to the text file. It also prints the path to the text file to the
+     // console.
+ 
      java.io.PrintWriter output = new java.io.PrintWriter(System.getProperty("user.dir") + "\\" + fileName + ".txt");
      output.println(Arrays.toString(new_arr));
      output.println();
@@ -89,8 +107,10 @@ class Sort {
  }
  
  public static int[] Sort(int array_parent[]) {
-  // quick sort
-  int n = array_parent.length;
+  // selection sort
+  //This code sorts an array of integers in ascending order using selection sort.
+
+int n = array_parent.length;
   for (int i = 0; i < n - 1; i++) {
    int min_idx = i;
    for (int j = i + 1; j < n; j++) {
@@ -115,10 +135,15 @@ class Sort {
  }
  
  public static int[] Sort_Main(int array_parent[], int n, int child_count, boolean litemode) {
-  ArrayList<Thread> threads = new ArrayList<Thread>();
-  ArrayList<int[]> list = new ArrayList<int[]>();
-  boolean continue_loop = true;
-  int index = 0, processor_count = Runtime.getRuntime().availableProcessors();
+  // Create a new ArrayList of Threads and an ArrayList of int arrays
+ArrayList<Thread> threads = new ArrayList<Thread>();
+ArrayList<int[]> list = new ArrayList<int[]>();
+// Declare a boolean variable to control whether the loop should continue
+boolean continue_loop = true;
+// Declare an int variable to keep track of the current index
+int index = 0;
+// Assign the number of processors to a variable
+int processor_count = Runtime.getRuntime().availableProcessors();
   outerloop: for (int h = 0; h < processor_count; h++) {
    if (!continue_loop) {
      break outerloop;
