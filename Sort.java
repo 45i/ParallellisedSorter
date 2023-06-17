@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
  
 //sort
@@ -11,25 +12,26 @@ class Sort {
   Scanner sc = new Scanner(System.in);
   int n = sc.nextInt();
   int arr[] = new int[n];
-  System.out.println("Populate array with random numbers? (true/false)[Recommend: "+((n>20)?"true":"false")+"]");
+  System.out
+     .println("Populate array with random numbers? (true/false)[Recommend: " + ((n > 20) ? "true" : "false") + "]");
   boolean random = (sc.next().toLowerCase().charAt(0) == 't');
   if (random) {
    for (int i = 0; i < n; i++) {
-    arr[i] = (int) (Math.random() * (n+1));
+     arr[i] = (int) (Math.random() * (n + 1));
    }
   } else {
    System.out.println("Enter the elements of the array:");
    for (int i = 0; i < n; i++) {
-    while (!sc.hasNextInt()) {
-      System.out.println("Please enter an integer");
-      sc.next();
-    }
-    arr[i] = sc.nextInt();
+     while (!sc.hasNextInt()) {
+        System.out.println("Please enter an integer");
+        sc.next();
+     }
+     arr[i] = sc.nextInt();
    }
   }
   System.out.println("Write the array to a file? (true/false)");
   boolean writeToFile = sc.nextBoolean();
-  
+ 
   System.out.println("Enable debug mode? (true/false)");
   boolean debugMode = sc.nextBoolean();
   int processors = Runtime.getRuntime().availableProcessors();
@@ -42,7 +44,7 @@ class Sort {
   if (count * processors < n) {
    count++;
   }
-  
+ 
   if (debugMode) {
    System.out.println("Elements per child process: " + count);
   }
@@ -51,33 +53,37 @@ class Sort {
   int[] new_arr = Sort(Sort_Main(arr, n, count, debugMode));
   long endTime = System.currentTimeMillis();
  
-  System.out.print("The sorted array is: "+Arrays.toString(new_arr));
-  
+  System.out.print("The sorted array is: " + Arrays.toString(new_arr));
+ 
   System.out.println("Took " + (endTime - startTime) + "ms -> " + (endTime - startTime) / 1000 + " seconds "
-  + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + new_arr.length);
+     + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + new_arr.length);
   if (writeToFile) {
-    System.out.println("Enter the file name (Without File Extension):");
-    String fileName = sc.next();
-    if (new File((System.getProperty("user.dir")+"\\"+fileName+".txt")).exists()) {
-      System.out.println("File already exists. Overwrite? (true/false)");
-      if (sc.nextBoolean()) {
+   System.out.println("Enter the file name (Without File Extension):");
+   String fileName = sc.next();
+   if (new File((System.getProperty("user.dir") + "\\" + fileName + ".txt")).exists()) {
+     System.out.println("File already exists. Overwrite? (true/false)");
+     if (sc.nextBoolean()) {
         System.out.println("Overwriting...");
-      } else {
-       fileName = fileName + "_1";
-        System.out.println("Writing to "+fileName+".txt");
-      }
-    } else {
-      System.out.println("File does not exist. Creating...");
-    }
-    try {
-      java.io.PrintWriter output = new java.io.PrintWriter(System.getProperty("user.dir")+"\\"+fileName+".txt");
-      output.println(Arrays.toString(new_arr));
-      output.close();
-      System.out.println("File written successfully @ "+System.getProperty("user.dir")+"\\"+fileName+".txt");
-
-    } catch (java.io.FileNotFoundException e) {
-      System.out.println("File not found");
-    }
+     } else {
+        fileName = fileName + "_1";
+        System.out.println("Writing to " + fileName + ".txt");
+     }
+   } else {
+     System.out.println("File does not exist. Creating...");
+   }
+   try {
+     java.io.PrintWriter output = new java.io.PrintWriter(System.getProperty("user.dir") + "\\" + fileName + ".txt");
+     output.println(Arrays.toString(new_arr));
+     output.println();
+     output.println("Stats:");
+     output.println("Took " + (endTime - startTime) + "ms -> " + (endTime - startTime) / 1000 + " seconds "
+             + (endTime - startTime) % 1000 + " milliseconds to sort");
+     output.close();
+     System.out.println("File written successfully @ " + System.getProperty("user.dir") + "\\" + fileName + ".txt");
+ 
+   } catch (java.io.FileNotFoundException e) {
+     System.out.println("File not found");
+   }
   }
   sc.close();
  }
@@ -114,24 +120,20 @@ class Sort {
   boolean continue_loop = true;
   int index = 0, processor_count = Runtime.getRuntime().availableProcessors();
   outerloop: for (int h = 0; h < processor_count; h++) {
-    if (!continue_loop) {
-      break outerloop;
-    }
-    int arr[] = new int[((n - index) > child_count) ? child_count : (n - index)];
-    for (int i = 0; i < child_count; i++) {
-      
-      if (index == n) {
+   if (!continue_loop) {
+     break outerloop;
+   }
+   int arr[] = new int[((n - index) > child_count) ? child_count : (n - index)];
+   for (int i = 0; i < child_count; i++) {
+     if (index == n) {
         continue_loop = false;
         break;
-      }
-      arr[i] = array_parent[index];
-      
-      index++;
-      
-    }
-    if (litemode) {
+     }
+     arr[i] = array_parent[index];
+     index++;
+   }
+   if (litemode) {
      System.out.print("The array for child process " + h + " is: " + Arrays.toString(arr) + "\n");
-     
    }
    System.out.println("Sorting the array for child process " + h);
  
@@ -141,41 +143,51 @@ class Sort {
      }
    });
    t.start();
-   if (litemode)
+   if (litemode) {
      System.out.println(t.getName() + " started");
+   }
    threads.add(t);
   }
-  if (litemode)
+  if (litemode) {
    System.out.println("Currently running " + threads.size() + " threads");
+  }
  
   for (Thread t : threads) {
    try {
      t.join();
    } catch (InterruptedException e) {
      e.printStackTrace();
- 
    }
   }
  
-  // int[] array_child = new int[];
-  List<Integer> array_child = new ArrayList<Integer>();
-  for (int[] i : list) {
-   for (int new_int : i) {
-     array_child.add(new_int);
+  // Combine the sorted portions of the array using a priority queue
+  PriorityQueue<Integer> pq = new PriorityQueue<>();
+  for (int i = 0; i < list.size(); i++) {
+   pq.offer(list.get(i)[0]);
+  }
+  int[] sortedArray = new int[array_parent.length];
+  int index2 = 0;
+  while (!pq.isEmpty()) {
+   int min = pq.poll();
+   sortedArray[index2++] = min;
+   int minIndex = findMinIndex(list, min);
+   int[] arr = list.get(minIndex);
+   if (arr.length > 1) {
+     list.set(minIndex, Arrays.copyOfRange(arr, 1, arr.length));
+     pq.offer(list.get(minIndex)[0]);
    }
   }
-  // for (int i = 0; i < array_child.size(); i++) {
-  // array_parent[i] = array_child.get(i);
-  // }
-  return array_child_to_array(array_child);
+  // sortedArray now contains the fully sorted array
+  return sortedArray;
  }
  
- public static int[] array_child_to_array(List<Integer> array_child) {
-  int[] array_parent = new int[array_child.size()];
-  for (int i = 0; i < array_child.size(); i++) {
-   array_parent[i] = array_child.get(i);
+ private static int findMinIndex(ArrayList<int[]> list, int min) {
+  for (int i = 0; i < list.size(); i++) {
+   if (list.get(i)[0] == min) {
+     return i;
+   }
   }
-  return array_parent;
+  return -1;
  }
  
 }
