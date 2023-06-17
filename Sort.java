@@ -1,16 +1,18 @@
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
  
 //sort
-class ParallelisedSort {
+class Sort {
  public static void main(String[] args) {
   System.out.println("Enter the number of elements in the array:");
   Scanner sc = new Scanner(System.in);
   int n = sc.nextInt();
   int arr[] = new int[n];
   System.out.println("Populate array with random numbers? (true/false)[Recommend: "+((n>20)?"true":"false")+"]");
-  boolean random = sc.nextBoolean();
+  boolean random = (sc.next().toLowerCase().charAt(0) == 't');
   if (random) {
    for (int i = 0; i < n; i++) {
     arr[i] = (int) (Math.random() * (n+1));
@@ -25,10 +27,11 @@ class ParallelisedSort {
     arr[i] = sc.nextInt();
    }
   }
+  System.out.println("Write the array to a file? (true/false)");
+  boolean writeToFile = sc.nextBoolean();
   
   System.out.println("Enable debug mode? (true/false)");
   boolean debugMode = sc.nextBoolean();
-  sc.close();
   int processors = Runtime.getRuntime().availableProcessors();
   if (debugMode) {
    System.out.println("Number of available processors: " + processors);
@@ -39,7 +42,7 @@ class ParallelisedSort {
   if (count * processors < n) {
    count++;
   }
- 
+  
   if (debugMode) {
    System.out.println("Elements per child process: " + count);
   }
@@ -48,12 +51,35 @@ class ParallelisedSort {
   int[] new_arr = Sort(Sort_Main(arr, n, count, debugMode));
   long endTime = System.currentTimeMillis();
  
-  System.out.print("The sorted array is: ");
-  for (int i = 0; i < new_arr.length; i++) {
-   System.out.print(new_arr[i] + ", ");
-  }
+  System.out.print("The sorted array is: "+Arrays.toString(new_arr));
+  
   System.out.println("Took " + (endTime - startTime) + "ms -> " + (endTime - startTime) / 1000 + " seconds "
-     + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + new_arr.length);
+  + (endTime - startTime) % 1000 + " milliseconds to sort an array of length " + new_arr.length);
+  if (writeToFile) {
+    System.out.println("Enter the file name (Without File Extension):");
+    String fileName = sc.next();
+    if (new File((System.getProperty("user.dir")+"\\"+fileName+".txt")).exists()) {
+      System.out.println("File already exists. Overwrite? (true/false)");
+      if (sc.nextBoolean()) {
+        System.out.println("Overwriting...");
+      } else {
+       fileName = fileName + "_1";
+        System.out.println("Writing to "+fileName+".txt");
+      }
+    } else {
+      System.out.println("File does not exist. Creating...");
+    }
+    try {
+      java.io.PrintWriter output = new java.io.PrintWriter(System.getProperty("user.dir")+"\\"+fileName+".txt");
+      output.println(Arrays.toString(new_arr));
+      output.close();
+      System.out.println("File written successfully @ "+System.getProperty("user.dir")+"\\"+fileName+".txt");
+
+    } catch (java.io.FileNotFoundException e) {
+      System.out.println("File not found");
+    }
+  }
+  sc.close();
  }
  
  public static int[] Sort(int array_parent[]) {
@@ -104,11 +130,8 @@ class ParallelisedSort {
       
     }
     if (litemode) {
-     System.out.print("The array for child process " + h + " is [");
-     for (int i = 0; i < arr.length; i++) {
-        System.out.print(arr[i] + ", ");
-     }
-     System.out.print("]\n");
+     System.out.print("The array for child process " + h + " is: " + Arrays.toString(arr) + "\n");
+     
    }
    System.out.println("Sorting the array for child process " + h);
  
