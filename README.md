@@ -1,5 +1,5 @@
 # ParallellisedSorter
-A small experiment to make a selectionsort algorithm that sorts an array in parallel.
+A small experiment to make a selection sort algorithm that sorts an array in parallel.
 
 # Some Results
 ## "I think they're called benchmarks"
