@@ -14,7 +14,7 @@ class Sort {
   int arr[] = new int[n];
   System.out
      .println("Populate array with random numbers? (true/false)[Recommend: " + ((n > 20) ? "true" : "false") + "]");
-  boolean random = (sc.next().toLowerCase().charAt(0) == 't');
+  boolean random = returnABoolean(sc.next());
   if (random) {
    String randomString = "";
    for (int i = 0; i < n; i++) {
@@ -40,10 +40,10 @@ class Sort {
    }
   }
   System.out.println("Write the array to a file? (true/false)");
-  boolean writeToFile = sc.nextBoolean();
+  boolean writeToFile = returnABoolean(sc.next());
  
   System.out.println("Enable debug mode? (true/false)");
-  boolean debugMode = sc.nextBoolean();
+  boolean debugMode = returnABoolean(sc.next());
   int processors = Runtime.getRuntime().availableProcessors();
   if (debugMode) {
    System.out.println("Number of available processors: " + processors);
@@ -76,7 +76,7 @@ class Sort {
    String fileName = sc.next();
    if (new File((System.getProperty("user.dir") + "\\" + fileName + ".txt")).exists()) {
      System.out.println("File already exists. Overwrite? (true/false)");
-     if (sc.nextBoolean()) {
+     if (returnABoolean(sc.next())) {
         System.out.println("Overwriting...");
      } else {
         fileName = fileName + "_1";
@@ -106,7 +106,11 @@ class Sort {
   sc.close();
  }
  
- public static int[] Sort(int array_parent[]) {
+ private static boolean returnABoolean(String next) {
+  return next.toLowerCase().charAt(0) == 't';
+}
+
+public static int[] Sort(int array_parent[]) {
   // selection sort
   //This code sorts an array of integers in ascending order using selection sort.
 
@@ -156,6 +160,9 @@ int processor_count = Runtime.getRuntime().availableProcessors();
      }
      arr[i] = array_parent[index];
      index++;
+   }
+   if (arr.length == 0) {
+    continue;
    }
    if (litemode) {
      System.out.print("The array for child process " + h + " is: " + Arrays.toString(arr) + "\n");
