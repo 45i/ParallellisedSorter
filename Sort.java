@@ -83,7 +83,7 @@ class Sort {
         System.out.println("Writing to " + fileName + ".txt");
      }
    } else {
-     System.out.println("File does not exist. Creating...");
+     System.out.println("File does not exist. Creating file...");
    }
    try {
      // This code writes the array to a text file, and also writes the stats of the
