@@ -17,3 +17,4 @@ A small experiment to make a selection sort algorithm that sorts an array in par
 
 - - **Execution Speeds vary from device to device**
 - - *Values are all generated randomly*
+- - **An Example Text File is included <a href= example.txt> here </a>

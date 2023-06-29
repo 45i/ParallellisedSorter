@@ -157,7 +157,7 @@ private static int[] quicksort(int[] arr, int left, int right) {
     if (left < right) {
         int pivotIndex = partition(arr, left, right);
         quicksort(arr, left, pivotIndex - 1);
-        quicksort(arr, pivotIndex + 1, right);
+        //quicksort(arr, pivotIndex + 1, right);
     }
     return arr;
 }
