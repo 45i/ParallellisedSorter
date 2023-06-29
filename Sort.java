@@ -16,11 +16,9 @@ class Sort {
      .println("Populate array with random numbers? (true/false)[Recommend: " + ((n > 20) ? "true" : "false") + "]");
   boolean random = returnABoolean(sc.next());
   if (random) {
-   String randomString = "";
    for (int i = 0; i < n; i++) {
      int temp = (int) (Math.random() * (n + 1));
      arr[i] = temp;
-     // randomString += temp + " ";
    }
   } else {
    // This code reads in n integers from the user and stores them in an array of
@@ -42,7 +40,7 @@ class Sort {
   System.out.println("Write the array to a file? (true/false)");
   boolean writeToFile = returnABoolean(sc.next());
  
-  System.out.println("Enable debug mode? (true/false)");
+  System.out.println("Display Useless Info? (true/false)");
   boolean debugMode = returnABoolean(sc.next());
   int processors = Runtime.getRuntime().availableProcessors();
   if (debugMode) {
@@ -109,34 +107,79 @@ class Sort {
  private static boolean returnABoolean(String next) {
   return next.toLowerCase().charAt(0) == 't';
 }
+public static int[] Sort(int[] arr) {
+    // Loop through the array
+    // Find the smallest element in the array
+    // Swap the smallest element with the first element in the array
+    // Repeat with the remaining array
+    return selectionSort(arr);
+}
 
-public static int[] Sort(int array_parent[]) {
-  // selection sort
-  //This code sorts an array of integers in ascending order using selection sort.
+public static int[] selectionSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i < n - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+        if (minIdx != i) {
+            arr[i] ^= arr[minIdx];
+            arr[minIdx] ^= arr[i];
+            arr[i] ^= arr[minIdx];
+        }
+    }
+    return arr;
+}
+public static int[] hybridSort(int[] arr) {
+    int n = arr.length;
+    if (n <= 10) { // if the size of the array is less than 10, we use insertion sort
+        return insertionSort(arr);
+    } else { // otherwise, we use quicksort
+        return quicksort(arr, 0, n - 1);
+    }
+}
+private static int[] insertionSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+    return arr;
+}
+private static int[] quicksort(int[] arr, int left, int right) {
+    if (left < right) {
+        int pivotIndex = partition(arr, left, right);
+        quicksort(arr, left, pivotIndex - 1);
+        quicksort(arr, pivotIndex + 1, right);
+    }
+    return arr;
+}
 
-int n = array_parent.length;
-  for (int i = 0; i < n - 1; i++) {
-   int min_idx = i;
-   for (int j = i + 1; j < n; j++) {
-     if (array_parent[j] < array_parent[min_idx]) {
-        min_idx = j;
-     }
-   }
-   int temp = array_parent[min_idx];
-   array_parent[min_idx] = array_parent[i];
-   array_parent[i] = temp;
-  }
-  // for (int i = 0; i < array_parent.length; i++) {
-  // for (int j = 0; j < array_parent.length - 1; j++) {
-  // if (array_parent[j] > array_parent[j + 1]) {
-  // int temp = array_parent[j];
-  // array_parent[j] = array_parent[j + 1];
-  // array_parent[j + 1] = temp;
-  // }
-  // }
-  // }
-  return array_parent;
- }
+private static int partition(int[] arr, int left, int right) {
+    int pivot = arr[right];
+    int i = left - 1;
+    for (int j = left; j < right; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    swap(arr, i + 1, right);
+    return i + 1;
+}
+
+private static void swap(int[] arr, int i, int j) {
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
  
  public static int[] Sort_Main(int array_parent[], int n, int child_count, boolean litemode) {
   // Create a new ArrayList of Threads and an ArrayList of int arrays
@@ -171,7 +214,7 @@ int processor_count = Runtime.getRuntime().availableProcessors();
  
    Thread t = new Thread(new Runnable() {
      public void run() {
-        list.add(Sort(arr));
+        list.add(hybridSort(arr));
      }
    });
    t.start();
