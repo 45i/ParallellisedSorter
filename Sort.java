@@ -58,7 +58,7 @@ class Sort {
   }
  
   long startTime = System.currentTimeMillis();
-  int[] new_arr = Sort(Sort_Main(arr, n, count, debugMode));
+  int[] new_arr = quicksort(Sort_Main(arr, n, count, debugMode,true),n,n-1);
   long endTime = System.currentTimeMillis();
  
   System.out.print("The sorted array is: " + Arrays.toString(new_arr));
@@ -107,7 +107,7 @@ class Sort {
  private static boolean returnABoolean(String next) {
   return next.toLowerCase().charAt(0) == 't';
 }
-public static int[] Sort(int[] arr) {
+public static int[] Sort_Sub(int[] arr) {
     // Loop through the array
     // Find the smallest element in the array
     // Swap the smallest element with the first element in the array
@@ -115,23 +115,34 @@ public static int[] Sort(int[] arr) {
     return selectionSort(arr);
 }
 
-public static int[] selectionSort(int[] arr) {
-    int n = arr.length;
-    for (int i = 0; i < n - 1; i++) {
-        int minIdx = i;
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j] < arr[minIdx]) {
-                minIdx = j;
-            }
-        }
-        if (minIdx != i) {
-            arr[i] ^= arr[minIdx];
-            arr[minIdx] ^= arr[i];
-            arr[i] ^= arr[minIdx];
-        }
-    }
-    return arr;
-}
+public static int[] selectionSort(int[] array_parent) {
+  // selection sort
+  //This code sorts an array of integers in ascending order using selection sort.
+
+int n = array_parent.length;
+  for (int i = 0; i < n - 1; i++) {
+   int min_idx = i;
+   for (int j = i + 1; j < n; j++) {
+     if (array_parent[j] < array_parent[min_idx]) {
+        min_idx = j;
+     }
+   }
+   int temp = array_parent[min_idx];
+   array_parent[min_idx] = array_parent[i];
+   array_parent[i] = temp;
+  }
+  // for (int i = 0; i < array_parent.length; i++) {
+  // for (int j = 0; j < array_parent.length - 1; j++) {
+  // if (array_parent[j] > array_parent[j + 1]) {
+  // int temp = array_parent[j];
+  // array_parent[j] = array_parent[j + 1];
+  // array_parent[j + 1] = temp;
+  // }
+  // }
+  // }
+  return array_parent;
+ }
+ 
 public static int[] hybridSort(int[] arr) {
     int n = arr.length;
     if (n <= 10) { // if the size of the array is less than 10, we use insertion sort
@@ -157,7 +168,7 @@ private static int[] quicksort(int[] arr, int left, int right) {
     if (left < right) {
         int pivotIndex = partition(arr, left, right);
         quicksort(arr, left, pivotIndex - 1);
-        //quicksort(arr, pivotIndex + 1, right);
+        quicksort(arr, pivotIndex + 1, right);
     }
     return arr;
 }
@@ -181,10 +192,11 @@ private static void swap(int[] arr, int i, int j) {
     arr[j] = temp;
 }
  
- public static int[] Sort_Main(int array_parent[], int n, int child_count, boolean litemode) {
+ public static int[] Sort_Main(int array_parent[], int n, int child_count, boolean litemode,boolean usehybrid) {
   // Create a new ArrayList of Threads and an ArrayList of int arrays
 ArrayList<Thread> threads = new ArrayList<Thread>();
 ArrayList<int[]> list = new ArrayList<int[]>();
+
 // Declare a boolean variable to control whether the loop should continue
 boolean continue_loop = true;
 // Declare an int variable to keep track of the current index
@@ -214,7 +226,7 @@ int processor_count = Runtime.getRuntime().availableProcessors();
  
    Thread t = new Thread(new Runnable() {
      public void run() {
-        list.add(hybridSort(arr));
+        list.add((usehybrid)?(hybridSort(arr)):Sort_Sub(arr));
      }
    });
    t.start();
