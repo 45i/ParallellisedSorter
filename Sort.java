@@ -1,11 +1,9 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
  
-//sort
 class Sort {
  static int comparisons = 0;
  
@@ -109,20 +107,7 @@ class Sort {
   sc.close();
  }
  
- private static int[] swapper(int[] sort_Main) {
-  for (int j = 0; j < sort_Main.length-1; j++) {
-    for (int i = 0; i < sort_Main.length-1; i++) {
-    if (sort_Main[i]>sort_Main[i+1]) {
-        int temp = sort_Main[i];
-        sort_Main[i] = sort_Main[i+1];
-        sort_Main[i+1] = temp;
-    }
-  }
-  }
-  return sort_Main;
-}
-
-private static boolean returnABoolean(String next) {
+ private static boolean returnABoolean(String next) {
   return next.toLowerCase().charAt(0) == 't';
  }
  
@@ -135,28 +120,27 @@ private static boolean returnABoolean(String next) {
  }
  
  public static int[] selectionSort(int[] array_parent) {
-    int n = array_parent.length;
-    for (int i = 0; i < n - 1; i++) {
-        int min_idx = i;
-        int min_val = array_parent[min_idx]; // Store the value of array_parent[min_idx]
-        
-        for (int j = i + 1; j < n; j++) {
-            if (array_parent[j] < min_val) {
-                min_idx = j;
-                min_val = array_parent[j]; // Update the minimum value
-            }
-        }
-        
-        if (min_idx != i) {
-            int temp = array_parent[i];
-            array_parent[i] = min_val;
-            array_parent[min_idx] = temp;
-        }
-    }
-    
-    return array_parent;
-}
-
+  int n = array_parent.length;
+  for (int i = 0; i < n - 1; i++) {
+   int min_idx = i;
+   int min_val = array_parent[min_idx]; // Store the value of array_parent[min_idx]
+ 
+   for (int j = i + 1; j < n; j++) {
+     if (array_parent[j] < min_val) {
+        min_idx = j;
+        min_val = array_parent[j]; // Update the minimum value
+     }
+   }
+ 
+   if (min_idx != i) {
+     int temp = array_parent[i];
+     array_parent[i] = min_val;
+     array_parent[min_idx] = temp;
+   }
+  }
+ 
+  return array_parent;
+ }
  
  public static int[] hybridSort(int[] arr) {
   int n = arr.length;
