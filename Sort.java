@@ -226,9 +226,9 @@ class Sort {
    }
    if (litemode) {
      System.out.print("The array for child process " + h + " is: " + Arrays.toString(arr) + "\n");
-   }
-   System.out.println("Sorting the array for child process " + h);
- 
+     System.out.println("Sorting the array for child process " + h);
+    }
+     
    Thread t = new Thread(new Runnable() {
      public void run() {
         list.add((usehybrid) ? (hybridSort(arr)) : selectionSort(arr));
