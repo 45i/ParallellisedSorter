@@ -58,7 +58,7 @@ class Sort {
   }
  
   long startTime = System.currentTimeMillis();
-  int[] new_arr = (Sort_Sub(Sort_Main(arr, n, count, debugMode, true)));
+  int[] new_arr = (selectionSort(Sort_Main(arr, n, count, debugMode, true)));
   long endTime = System.currentTimeMillis();
  
   System.out.println("The sorted array is: " + Arrays.toString(new_arr));
@@ -231,7 +231,7 @@ class Sort {
  
    Thread t = new Thread(new Runnable() {
      public void run() {
-        list.add((usehybrid) ? (hybridSort(arr)) : Sort_Sub(arr));
+        list.add((usehybrid) ? (hybridSort(arr)) : selectionSort(arr));
      }
    });
    t.start();
