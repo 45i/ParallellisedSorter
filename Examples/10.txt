@@ -1,0 +1,5 @@
+[0, 0, 1, 2, 4, 4, 6, 9, 10, 10]
+
+Stats:
+Took 0ms -> 0 seconds 0 milliseconds to sort
+Number of comparisons: 5
