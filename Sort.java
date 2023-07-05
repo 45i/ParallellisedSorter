@@ -17,8 +17,7 @@ class Sort {
   boolean random = returnABoolean(sc.next());
   if (random) {
    for (int i = 0; i < n; i++) {
-     int temp = (int) (Math.random() * (n + 1));
-     arr[i] = temp;
+     arr[i] = (int) (Math.random() * (n + 1));;
    }
   } else {
    // This code reads in n integers from the user and stores them in an array of
